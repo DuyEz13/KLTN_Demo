@@ -19,26 +19,71 @@
     audio {
       width: 180px;
     }
+    select {
+      margin-bottom: 20px;
+      padding: 5px 10px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
   <h1>So sánh các phương pháp theo mức nhiễu</h1>
-  <table>
-    <tr>
-      <th>Phương pháp</th>
-      <th>Nhiễu 0%</th>
-      <th>Nhiễu 25%</th>
-      <th>Nhiễu 50%</th>
-      <th>Nhiễu 75%</th>
-    </tr>
 
-    <tr>
-      <td>Original</td>
-      <td><audio controls><source src="Audio/Sample_1/0-0_0pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
-      <td><audio controls><source src="Audio/Sample_1/0-0_dm_25pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
-      <td><audio controls><source src="Audio/Sample_1/0-0_dm_50pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
-      <td><audio controls><source src="Audio/Sample_1/0-0_dm_75pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
-    </tr>
+  <label for="audioSelect">Chọn audio: </label>
+  <select id="audioSelect">
+    <option value="Sample_1">Sample 1</option>
+    <option value="Sample_2">Sample 2</option>
+    <option value="Sample_3">Sample 3</option>
+  </select>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Phương pháp</th>
+        <th>Nhiễu 0%</th>
+        <th>Nhiễu 25%</th>
+        <th>Nhiễu 50%</th>
+        <th>Nhiễu 75%</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Original</td>
+        <td><audio controls id="audio_0"></audio></td>
+        <td><audio controls id="audio_25"></audio></td>
+        <td><audio controls id="audio_50"></audio></td>
+        <td><audio controls id="audio_75"></audio></td>
+      </tr>
+    </tbody>
   </table>
+
+  <script>
+    const audioSelect = document.getElementById("audioSelect");
+    const audioIds = {
+      "0": "audio_0",
+      "25": "audio_25",
+      "50": "audio_50",
+      "75": "audio_75"
+    };
+
+    function updateAudioSources(sample) {
+      const prefix = sample === "Sample_1" ? "0-0" :
+                     sample === "Sample_2" ? "0-1" :
+                     sample === "Sample_3" ? "0-2" : "0-0";
+
+      document.getElementById(audioIds["0"]).src = `Audio/${sample}/${prefix}_0pct.wav`;
+      document.getElementById(audioIds["25"]).src = `Audio/${sample}/${prefix}_dm_25pct.wav`;
+      document.getElementById(audioIds["50"]).src = `Audio/${sample}/${prefix}_dm_50pct.wav`;
+      document.getElementById(audioIds["75"]).src = `Audio/${sample}/${prefix}_dm_75pct.wav`;
+    }
+
+    // Gọi khi trang load
+    updateAudioSources(audioSelect.value);
+
+    // Gọi khi dropdown thay đổi
+    audioSelect.addEventListener("change", () => {
+      updateAudioSources(audioSelect.value);
+    });
+  </script>
 </body>
 </html>
