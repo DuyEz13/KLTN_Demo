@@ -2,11 +2,12 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>So sánh các phương pháp xử lý âm thanh</title>
+  <title>So sánh phương pháp xử lý âm thanh</title>
   <style>
     table {
       border-collapse: collapse;
       width: 100%;
+      margin-bottom: 40px;
     }
     th, td {
       border: 1px solid #aaa;
@@ -24,10 +25,13 @@
       padding: 5px 10px;
       font-size: 16px;
     }
+    h2 {
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
-  <h1>So sánh các phương pháp theo mức nhiễu</h1>
+  <h1>So sánh các phương pháp xử lý âm thanh</h1>
 
   <label for="audioSelect">Chọn audio: </label>
   <select id="audioSelect">
@@ -36,6 +40,8 @@
     <option value="Sample_3">Sample 3</option>
   </select>
 
+  <!-- BẢNG GAUSSIAN -->
+  <h2>Nhiễu Gaussian</h2>
   <table>
     <thead>
       <tr>
@@ -49,38 +55,67 @@
     <tbody>
       <tr>
         <td>Original</td>
-        <td><audio controls id="audio_0"></audio></td>
-        <td><audio controls id="audio_25"></audio></td>
-        <td><audio controls id="audio_50"></audio></td>
-        <td><audio controls id="audio_75"></audio></td>
+        <td><audio controls id="gau_0"></audio></td>
+        <td><audio controls id="gau_25"></audio></td>
+        <td><audio controls id="gau_50"></audio></td>
+        <td><audio controls id="gau_75"></audio></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- BẢNG DEMAND -->
+  <h2>Nhiễu DEMAND</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Phương pháp</th>
+        <th>Nhiễu 0%</th>
+        <th>Nhiễu 25%</th>
+        <th>Nhiễu 50%</th>
+        <th>Nhiễu 75%</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Original</td>
+        <td><audio controls id="dm_0"></audio></td>
+        <td><audio controls id="dm_25"></audio></td>
+        <td><audio controls id="dm_50"></audio></td>
+        <td><audio controls id="dm_75"></audio></td>
       </tr>
     </tbody>
   </table>
 
   <script>
     const audioSelect = document.getElementById("audioSelect");
-    const audioIds = {
-      "0": "audio_0",
-      "25": "audio_25",
-      "50": "audio_50",
-      "75": "audio_75"
-    };
 
-    function updateAudioSources(sample) {
-      const prefix = sample === "Sample_1" ? "0-0" :
-                     sample === "Sample_2" ? "0-1" :
-                     sample === "Sample_3" ? "0-2" : "0-0";
-
-      document.getElementById(audioIds["0"]).src = `Audio/${sample}/${prefix}_0pct.wav`;
-      document.getElementById(audioIds["25"]).src = `Audio/${sample}/${prefix}_dm_25pct.wav`;
-      document.getElementById(audioIds["50"]).src = `Audio/${sample}/${prefix}_dm_50pct.wav`;
-      document.getElementById(audioIds["75"]).src = `Audio/${sample}/${prefix}_dm_75pct.wav`;
+    function getPrefix(sample) {
+      return sample === "Sample_1" ? "0-0" :
+             sample === "Sample_2" ? "0-1" :
+             sample === "Sample_3" ? "0-2" : "0-0";
     }
 
-    // Gọi khi trang load
+    function updateAudioSources(sample) {
+      const prefix = getPrefix(sample);
+      const basePath = `Audio/${sample}/`;
+
+      // Gaussian
+      document.getElementById("gau_0").src  = `${basePath}${prefix}_0pct.wav`;
+      document.getElementById("gau_25").src = `${basePath}${prefix}_gau_25pct.wav`;
+      document.getElementById("gau_50").src = `${basePath}${prefix}_gau_50pct.wav`;
+      document.getElementById("gau_75").src = `${basePath}${prefix}_gau_75pct.wav`;
+
+      // DEMAND
+      document.getElementById("dm_0").src  = `${basePath}${prefix}_0pct.wav`;
+      document.getElementById("dm_25").src = `${basePath}${prefix}_dm_25pct.wav`;
+      document.getElementById("dm_50").src = `${basePath}${prefix}_dm_50pct.wav`;
+      document.getElementById("dm_75").src = `${basePath}${prefix}_dm_75pct.wav`;
+    }
+
+    // Khi trang load lần đầu
     updateAudioSources(audioSelect.value);
 
-    // Gọi khi dropdown thay đổi
+    // Khi người dùng thay đổi lựa chọn
     audioSelect.addEventListener("change", () => {
       updateAudioSources(audioSelect.value);
     });
