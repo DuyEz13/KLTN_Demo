@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>So sánh các phương pháp xử lý âm thanh</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    audio {
+      width: 180px;
+    }
+  </style>
+</head>
+<body>
+  <h1>So sánh các phương pháp theo mức nhiễu</h1>
+  <table>
+    <tr>
+      <th>Phương pháp</th>
+      <th>Nhiễu 0%</th>
+      <th>Nhiễu 25%</th>
+      <th>Nhiễu 50%</th>
+      <th>Nhiễu 75%</th>
+    </tr>
+
+    <tr>
+      <td>Original</td>
+      <td><audio controls><source src="Audio/Sample_1/0-0_0pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
+      <td><audio controls><source src="Audio/Sample_1/0-0_dm_25pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
+      <td><audio controls><source src="Audio/Sample_1/0-0_dm_50pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
+      <td><audio controls><source src="Audio/Sample_1/0-0_dm_75pct.wav" type="audio/wav">Trình duyệt không hỗ trợ.</audio></td>
+    </tr>
+  </table>
+</body>
+</html>
