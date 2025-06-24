@@ -39,22 +39,28 @@
   <h1>Sample Outputs</h1>
   <label for="sampleSelect"><strong>Chọn audio sample:</strong></label>
   <select id="sampleSelect">
-    <option value="Sample_1">Sample 1</option>
-    <option value="Sample_2">Sample 2</option>
-    <option value="Sample_3">Sample 3</option>
-    <option value="Sample_4">Sample 4</option>
-    <option value="Sample_5">Sample 5</option>
+    <option value="0">Sample 1</option>
+    <option value="1">Sample 2</option>
+    <option value="2">Sample 3</option>
+    <option value="3">Sample 4</option>
+    <option value="4">Sample 5</option>
   </select>
 
   <div id="tablesContainer"></div>
 
   <script>
-    const methods = ["Original", "Spectral_Gating", "CleanUNet", "SEMamba", "FullSubNet+", "FreeVC"];
+    const methods = ["Original", "Spectral_Gating", "FreeVC", "RVC"];
     const noiseLabels = ["0%", "25%", "50%", "75%"];
     const gauSuffixes = ["0pct", "gau_25pct", "gau_50pct", "gau_75pct"];
     const dmSuffixes  = ["0pct", "dm_25pct", "dm_50pct", "dm_75pct"];
 
-    function createTable(sampleFolder, noiseType, suffixes, title) {
+    // Mảng tên file tương ứng với Sample_1 → Sample_5
+    const sampleFilenames = ["0-0", "1-33", "11-26", "14-135", "9-120"];
+
+    function createTable(sampleIndex, suffixes, title) {
+      const sampleFolder = `Sample_${parseInt(sampleIndex) + 1}`;
+      const baseName = sampleFilenames[sampleIndex];
+
       let table = `<h2>${title}</h2>`;
       table += `<table>
         <tr>
@@ -65,7 +71,7 @@
       methods.forEach(method => {
         table += `<tr><td>${method}</td>`;
         suffixes.forEach(suffix => {
-          const filename = `0-0_${suffix}.wav`;
+          const filename = `${baseName}_${suffix}.wav`;
           const filepath = `Audio/${sampleFolder}/${method}/${filename}`;
           table += `<td><audio controls><source src="${filepath}" type="audio/wav">Không hỗ trợ</audio></td>`;
         });
@@ -77,10 +83,10 @@
     }
 
     function updateTables() {
-      const selectedSample = document.getElementById('sampleSelect').value;
+      const sampleIndex = parseInt(document.getElementById('sampleSelect').value);
       const container = document.getElementById('tablesContainer');
-      const gauTable = createTable(selectedSample, "gau", gauSuffixes, "Nhiễu Gaussian");
-      const dmTable = createTable(selectedSample, "dm", dmSuffixes, "Nhiễu thực tế DEMAND");
+      const gauTable = createTable(sampleIndex, gauSuffixes, "Nhiễu Gaussian");
+      const dmTable = createTable(sampleIndex, dmSuffixes, "Nhiễu thực tế DEMAND");
       container.innerHTML = gauTable + dmTable;
     }
 
