@@ -69,10 +69,10 @@
     <thead>
       <tr>
         <th>Phương pháp</th>
-        <th>Nhiễu 0%</th>
-        <th>Nhiễu 25%</th>
-        <th>Nhiễu 50%</th>
-        <th>Nhiễu 75%</th>
+        <th>0%</th>
+        <th>25%</th>
+        <th>50%</th>
+        <th>75%</th>
       </tr>
     </thead>
     <tbody>
@@ -100,13 +100,13 @@
       const basePath = `Audio/${sample}/`;
 
       // Gaussian
-      document.getElementById("gau_0").src  = `${basePath}${prefix}_0pct.wav`;
+      document.getElementById("gau_0").src  = `${basePath}${prefix}_gau_0pct.wav`;
       document.getElementById("gau_25").src = `${basePath}${prefix}_gau_25pct.wav`;
       document.getElementById("gau_50").src = `${basePath}${prefix}_gau_50pct.wav`;
       document.getElementById("gau_75").src = `${basePath}${prefix}_gau_75pct.wav`;
 
       // DEMAND
-      document.getElementById("dm_0").src  = `${basePath}${prefix}_0pct.wav`;
+      document.getElementById("dm_0").src  = `${basePath}${prefix}_dm_0pct.wav`;
       document.getElementById("dm_25").src = `${basePath}${prefix}_dm_25pct.wav`;
       document.getElementById("dm_50").src = `${basePath}${prefix}_dm_50pct.wav`;
       document.getElementById("dm_75").src = `${basePath}${prefix}_dm_75pct.wav`;
