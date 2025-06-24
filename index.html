@@ -36,7 +36,7 @@
 </head>
 <body>
 
-  <h1>So sánh các phương pháp xử lý</h1>
+  <h1>Sample Outputs</h1>
   <label for="sampleSelect"><strong>Chọn audio sample:</strong></label>
   <select id="sampleSelect">
     <option value="Sample_1">Sample 1</option>
@@ -79,8 +79,8 @@
     function updateTables() {
       const selectedSample = document.getElementById('sampleSelect').value;
       const container = document.getElementById('tablesContainer');
-      const gauTable = createTable(selectedSample, "gau", gauSuffixes, "Bảng 1: Nhiễu Gaussian");
-      const dmTable = createTable(selectedSample, "dm", dmSuffixes, "Bảng 2: Nhiễu Demand");
+      const gauTable = createTable(selectedSample, "gau", gauSuffixes, "Nhiễu Gaussian");
+      const dmTable = createTable(selectedSample, "dm", dmSuffixes, "Nhiễu thực tế DEMAND");
       container.innerHTML = gauTable + dmTable;
     }
 
