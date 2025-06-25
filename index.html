@@ -111,7 +111,7 @@
       const container = document.getElementById('tablesContainer');
       const baseName = sampleFilenames[sampleIndex];
       const transcriptText = transcriptMap[baseName] || 'Transcript không có sẵn.';
-      document.getElementById('transcript').textContent = `Transcript: ${transcriptText}`;
+      document.getElementById('transcript').textContent = `Transcript gốc: ${transcriptText}`;
       const gauTable = createTable(sampleIndex, gauSuffixes, "Nhiễu Gaussian");
       const dmTable = createTable(sampleIndex, dmSuffixes, "Nhiễu thực tế DEMAND");
       container.innerHTML = gauTable + dmTable;
