@@ -127,7 +127,7 @@
         resynMethods.forEach(method => {
           const methodSuffix = resynMethodMap[method]; // ví dụ "py"
           const filename = `${baseName}_${step}_${methodSuffix}.wav`;
-          const filepath = `Audio/${sampleFolder}/resynthesis/${method}/${filename}`;
+          const filepath = `Audio/${sampleFolder}/Resynthesis/${filename}`;
           table += `<td><audio controls><source src="${filepath}" type="audio/wav">Không hỗ trợ</audio></td>`;
         });
         table += `</tr>`;
