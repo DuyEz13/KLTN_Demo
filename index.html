@@ -48,6 +48,14 @@
 
   <div id="tablesContainer"></div>
 
+  <br><br>
+  <button onclick="toggleResynthTable()">Xem kết quả phương pháp tái tổng hợp giọng nói</button>
+
+  <div id="resynth-container" style="display: none; margin-top: 20px;">
+    <h2>Kết quả phương pháp tái tổng hợp giọng nói</h2>
+    <div id="resynth-table"></div>
+  </div>
+
   <script>
     const methods = ["Original", "Spectral_Gating", "CleanUNet", "CleanMel", "MP-SENet", "SEMamba", "FullSubNet+", "FreeVC"];
     const noiseLabels = ["0%", "25%", "50%", "75%"];
@@ -88,10 +96,58 @@
       const gauTable = createTable(sampleIndex, gauSuffixes, "Nhiễu Gaussian");
       const dmTable = createTable(sampleIndex, dmSuffixes, "Nhiễu thực tế DEMAND");
       container.innerHTML = gauTable + dmTable;
+
+      const resynthContainer = document.getElementById('resynth-container');
+      if (resynthContainer.style.display !== 'none') {
+        document.getElementById('resynth-table').innerHTML = createResynthTable(sampleIndex);
+      }
     }
 
     document.getElementById('sampleSelect').addEventListener('change', updateTables);
     updateTables(); // Load lần đầu
+
+    const resynSteps = ["50k", "100k", "150k", "250k", "300k"];
+    const resynMethodMap = {
+      "Pyworld": "py", 
+      "YAAPT": "ya"
+    };
+
+    function createResynthTable(sampleIndex) {
+      const sampleFolder = `Sample_${parseInt(sampleIndex) + 1}`;
+      const baseName = sampleFilenames[sampleIndex];
+      let table = `<table>
+        <tr>
+          <th>Step</th>
+          ${resynMethods.map(m => `<th>${m}</th>`).join('')}
+        </tr>`;
+
+      resynSteps.forEach(step => {
+        table += `<tr><td>${step}</td>`;
+        resynMethods.forEach(method => {
+          const methodSuffix = resynMethodMap[method]; // ví dụ "py"
+          const filename = `${baseName}_${step}_${methodSuffix}.wav`;
+          const filepath = `Audio/${sampleFolder}/resynthesis/${method}/${filename}`;
+          table += `<td><audio controls><source src="${filepath}" type="audio/wav">Không hỗ trợ</audio></td>`;
+        });
+        table += `</tr>`;
+      });
+
+      table += `</table>`;
+      return table;
+    }
+
+    function toggleResynthTable() {
+      const container = document.getElementById('resynth-container');
+      const tableDiv = document.getElementById('resynth-table');
+      const sampleIndex = parseInt(document.getElementById('sampleSelect').value);
+
+      if (container.style.display === 'none') {
+        tableDiv.innerHTML = createResynthTable(sampleIndex);
+        container.style.display = 'block';
+      } else {
+        container.style.display = 'none';
+      }
+    }
   </script>
 
 </body>
