@@ -46,7 +46,9 @@
     <option value="4">Sample 5</option>
   </select>
 
-  <p id="transcript" style="font-style: italic; font-size: 18px; margin-bottom: 10px;"></p>
+  <p id="transcript" style="font-size: 18px; margin-bottom: 10px;">
+    <strong>Transcript gốc:</strong> <span id="transcript-content"></span>
+  </p>
   
   <div id="tablesContainer"></div>
 
@@ -111,7 +113,7 @@
       const container = document.getElementById('tablesContainer');
       const baseName = sampleFilenames[sampleIndex];
       const transcriptText = transcriptMap[baseName] || 'Transcript không có sẵn.';
-      document.getElementById('transcript').textContent = `Transcript gốc: ${transcriptText}`;
+      document.getElementById('transcript-content').textContent = transcriptText;
       const gauTable = createTable(sampleIndex, gauSuffixes, "Nhiễu Gaussian");
       const dmTable = createTable(sampleIndex, dmSuffixes, "Nhiễu thực tế DEMAND");
       container.innerHTML = gauTable + dmTable;
